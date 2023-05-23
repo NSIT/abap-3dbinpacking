@@ -146,7 +146,7 @@ class Packer:
         return self.items.append(item)
 
     def pack_to_bin(self, bin, item):
-        fitted = False
+        items_packed_before = len(bin.items)
 
         if not bin.items:
             response = bin.put_item(item, START_POSITION)
@@ -154,7 +154,7 @@ class Packer:
             if not response:
                 bin.unfitted_items.append(item)
 
-            return
+            return len(bin.items) > items_packed_before
 
         for axis in range(0, 3):
             items_in_bin = bin.items
@@ -182,13 +182,10 @@ class Packer:
                     ]
 
                 if bin.put_item(item, pivot):
-                    fitted = True
-                    break
-            if fitted:
-                break
+                    return len(bin.items) > items_packed_before
 
-        if not fitted:
-            bin.unfitted_items.append(item)
+        bin.unfitted_items.append(item)
+        return False
 
     def pack(
         self, bigger_first=False, distribute_items=False,
@@ -208,9 +205,12 @@ class Packer:
         )
 
         for bin in self.bins:
+            packed_items = []
             for item in self.items:
-                self.pack_to_bin(bin, item)
+                item_ = Item(item.name, item.width, item.height, item.depth, item.weight)
+                if self.pack_to_bin(bin, item_):
+                    packed_items.append(item)
 
             if distribute_items:
-                for item in bin.items:
+                for item in packed_items:
                     self.items.remove(item)
