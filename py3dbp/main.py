@@ -144,6 +144,7 @@ class Bin:
         ax.plot3D([x, x], [y+dy, y+dy], [z, z+dz], **kwargs)
         ax.plot3D([x+dx, x+dx], [y+dy, y+dy], [z, z+dz], **kwargs)
         ax.plot3D([x+dx, x+dx], [y, y], [z, z+dz], **kwargs)
+        ax.set_aspect('equal')
 
     def plotBoxAndItems(self,title=""):
         """ side effective. Plot the Bin and the items it contains. """
