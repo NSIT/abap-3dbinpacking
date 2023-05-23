@@ -188,7 +188,7 @@ class Packer:
         return False
 
     def pack(
-        self, bigger_first=False, distribute_items=False,
+        self, bigger_bins_first=False, bigger_items_first=False, distribute_items=False,
         number_of_decimals=DEFAULT_NUMBER_OF_DECIMALS
     ):
         for bin in self.bins:
@@ -198,10 +198,10 @@ class Packer:
             item.format_numbers(number_of_decimals)
 
         self.bins.sort(
-            key=lambda bin: bin.get_volume(), reverse=bigger_first
+            key=lambda bin: bin.get_volume(), reverse=bigger_bins_first
         )
         self.items.sort(
-            key=lambda item: item.get_volume(), reverse=bigger_first
+            key=lambda item: item.get_volume(), reverse=bigger_items_first
         )
 
         for bin in self.bins:
