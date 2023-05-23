@@ -156,9 +156,10 @@ class Bin:
         counter = 0
         for item in self.items:
             x,y,z = item.position
+            dim_width, dim_height, dim_depth = item.get_dimension( )
             color = colorList[counter % len(colorList)]
             self._plotCube(axGlob, float(x), float(y), float(z),
-                     float(item.width), float(item.height), float(item.depth),
+                     float(dim_width), float(dim_height), float(dim_depth),
                      color=color)
             counter = counter + 1
         plt.title(title)
