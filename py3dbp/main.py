@@ -171,16 +171,12 @@ class Packer:
     def __init__(self):
         self.bins = []
         self.items = []
-        self.unfit_items = []
-        self.total_items = 0
 
     def add_bin(self, bin):
-        return self.bins.append(bin)
+        self.bins.append(bin)
 
     def add_item(self, item):
-        self.total_items = len(self.items) + 1
-
-        return self.items.append(item)
+        self.items.append(item)
 
     def pack_to_bin(self, bin, item):
         items_packed_before = len(bin.items)
