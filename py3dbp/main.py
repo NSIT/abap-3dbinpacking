@@ -94,6 +94,10 @@ class Bin:
         return set_to_decimal(total_weight, self.number_of_decimals)
 
     def put_item(self, item, pivot):
+
+        if self.get_total_weight() + item.weight > self.max_weight:
+            return False
+
         fit = False
         valid_item_position = item.position
         item.position = pivot
@@ -118,21 +122,10 @@ class Bin:
             if not fit:
                 continue
 
-            if fit:
-                if self.get_total_weight() + item.weight > self.max_weight:
-                    fit = False
-                    return fit
-
-                self.items.append(item)
-
-            if not fit:
-                item.position = valid_item_position
-
+            self.items.append(item)
             return fit
 
-        if not fit:
-            item.position = valid_item_position
-
+        item.position = valid_item_position
         return fit
 
 
