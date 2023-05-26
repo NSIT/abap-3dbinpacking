@@ -115,6 +115,9 @@ class Bin:
                     fit = False
                     break
 
+            if not fit:
+                continue
+
             if fit:
                 if self.get_total_weight() + item.weight > self.max_weight:
                     fit = False
